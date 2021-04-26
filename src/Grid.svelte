@@ -1,21 +1,27 @@
 <script>
 	import { onMount } from 'svelte';
 	import "aframe";
-	import 'aframe-event-set-component';
+	// import 'aframe-event-set-component';
 	import 'aframe-look-at-component';
-	import '../scripts/grid';
-	import 'aframe-extras';
+	// import 'aframe-extras';
 
+	export let goalPosition = {x: 0, y: 0, z: 0};
 	let camera;
 	let OxyDefault, OxyAdditional,
 		OzyDefault, OzyAdditional,
 		zeroDefault,
 		yAxisDefault, yAxisAdditional;
 
-	const gridSize = 22;
+	let gridSize = 10;
 	const step = 2; // 1 step = scale meters
 	const scale = 100;
-	const gridColor = "#717171"
+	const gridColor = "#717171";
+
+	AFRAME.registerComponent('grid-size-listener', {
+		tick: function () {
+			gridSize = -goalPosition.y;
+		}
+	});
 
 	onMount(() => {
 		console.log('hellou');
@@ -53,10 +59,17 @@
 			}
 		}
 	});
+
+	AFRAME.registerComponent('goal-listener', {
+		tick: function () {
+			
+		}
+	})
 </script>
 
-<a-scene>
+<a-scene embedded>
 	<a-assets>
+		<!-- Mixin for displaying text -->
 		<a-mixin id="text-fill" 
 				 geometry="primitive: plane; width: auto; height: auto"
 				 material="color: black; shader: flat; visible: false"
@@ -66,20 +79,28 @@
 		</a-mixin>
 	</a-assets>
 
-	<a-entity>
+	<!-- Create camera -->
+	<a-entity >
 		<a-camera bind:this={camera}
-				  id="cam" 
+				  position="19 -10 19"
+				  id="cam"
 				  look-controls
 				  wasd-controls>
 		</a-camera>
-		<a-entity camera-listener={{}}/>
 	</a-entity>
 
+	<!-- Create listeners -->
+	<a-entity>
+		<a-entity camera-listener={{}}/>
+		<a-entity grid-size-listener={{}}/>
+	</a-entity>
 
+	<!-- Create light -->
 	<a-entity light="type: ambient; color: #BBB"></a-entity>
 	<a-entity light="type: directional; color: #FFF; intensity: 0.2" position="-0.5 1 1"></a-entity>
 
-	<a-entity>
+	<!-- Create grid -->
+	<a-entity id="grid">
 		<a-entity bind:this={zeroDefault} visible="true" mixin="text-fill" text="value: 0" position="0 0.5 0"></a-entity>
 
 		<a-entity bind:this={yAxisDefault}>
@@ -98,7 +119,7 @@
 			{/each}
 		</a-entity>
 
-		<!-- Oxy -->
+		<!-- Oxy (default and additional) -->
 		<a-entity bind:this={OxyDefault} visible="true">
 			{#each Array(gridSize) as _, i}
 				{#if i != 0 && i % 5 == 0}
@@ -119,7 +140,7 @@
 			{/each}
 		</a-entity>
 
-		<!-- Ozy -->
+		<!-- Ozy (default and additional) -->
 		<a-entity bind:this={OzyDefault} visible="true">
 			{#each Array(gridSize) as _, i}
 				{#if i != 0 && i % 5 == 0}
@@ -148,6 +169,4 @@
 			{/each}
 		</a-entity>
 
-	<a-sphere id="sph" position="0 0 0" radius="0.3"></a-sphere>
-	<a-sphere id="sph" position="0 {-gridSize*step+step} 0" radius="0.3"></a-sphere>
 </a-scene>

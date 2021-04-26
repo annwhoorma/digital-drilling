@@ -1,26 +1,26 @@
 <script>
-    import { endPoint } from '../scripts/scene.js';
+    export let goalPosition = {x: 0, y: 0, z: 0};
 </script>
 
 <div>
     <label>
         X
-        <input type="number" bind:value={$endPoint.position.x} min="-100" max="100" step="0.1"/>
+        <input bind:value={goalPosition.x} type="number" min="-5000" max="0" step="5"/>
     </label>
     <label>
         Y
-        <input type="number" bind:value={$endPoint.position.y} min="-100" max="100" step="0.1"/>
+        <input bind:value={goalPosition.y} type="number" min="-5000" max="0" step="5"/>
     </label>
     <label>
         Z
-        <input type="number" bind:value={$endPoint.position.z} min="-100" max="100" step="0.1"/>
+        <input bind:value={goalPosition.z} type="number"  min="-5000" max="0" step="5"/>
     </label>
 </div>
 
 <style>
     input {
         float: center;
-        width: 60%;
+        width: 5em;
     }
     div {
         margin: 1em 1em 1em 0em;
