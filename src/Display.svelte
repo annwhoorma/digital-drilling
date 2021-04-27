@@ -2,7 +2,7 @@
 	import Grid from './Grid.svelte';
 	import Position from './Position.svelte';
 
-	let goalPosition = {x: -10, y: -10, z: -10};
+	let goalPosition = {x: -2, y: -2, z: -2};
 </script>
 
 

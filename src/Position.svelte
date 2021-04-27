@@ -5,15 +5,15 @@
 <div>
     <label>
         X
-        <input bind:value={goalPosition.x} type="number" min="-5000" max="0" step="5"/>
+        <input bind:value={goalPosition.x} type="number" min="-5000" max="-2" step="-1"/>
     </label>
     <label>
         Y
-        <input bind:value={goalPosition.y} type="number" min="-5000" max="0" step="5"/>
+        <input bind:value={goalPosition.y} type="number" min="-5000" max="-2" step="-1"/>
     </label>
     <label>
         Z
-        <input bind:value={goalPosition.z} type="number"  min="-5000" max="0" step="5"/>
+        <input bind:value={goalPosition.z} type="number"  min="-5000" max="-2" step="-1"/>
     </label>
 </div>
 
